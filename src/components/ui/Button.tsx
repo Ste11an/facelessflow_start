@@ -23,6 +23,7 @@ const buttonVariants = cva(
       },
       fullWidth: {
         true: 'w-full',
+        false: '',
       },
     },
     defaultVariants: {
@@ -33,26 +34,28 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonVariantProps = VariantProps<typeof buttonVariants>
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+    ButtonVariantProps {
   children: ReactNode
   isLoading?: boolean
 }
 
 export default function Button({
   children,
-  variant,
-  size,
-  fullWidth,
+  variant = 'primary',
+  size = 'md',
+  fullWidth = false,
   isLoading = false,
-  className,
+  className = '',
   disabled,
   ...props
 }: ButtonProps) {
   return (
     <motion.button
-      className={`${buttonVariants({ variant, size, fullWidth })} ${className ?? ''}`}
+      className={`${buttonVariants({ variant, size, fullWidth })} ${className}`}
       disabled={disabled || isLoading}
       whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
       whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
