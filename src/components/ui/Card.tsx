@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva, VariantProps } from 'class-variance-authority'
 
 const cardVariants = cva(
   'rounded-xl shadow-lg overflow-hidden',
@@ -28,12 +28,13 @@ const cardVariants = cva(
   }
 )
 
-export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {
+type CardVariants = VariantProps<typeof cardVariants>
+
+type CardProps = {
   children: ReactNode
   animate?: boolean
-}
+  className?: string
+} & CardVariants
 
 export default function Card({
   children,
