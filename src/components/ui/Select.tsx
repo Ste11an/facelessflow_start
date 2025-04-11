@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const selectVariants = cva(
-  "block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+  "block w-full px-3 py-2 bg-gray-800 border rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
   {
     variants: {
       variant: {
@@ -39,9 +39,11 @@ export default function Select({
   options,
   variant,
   size,
-  className,
+  className = '',
   ...props
 }: SelectProps) {
+  const classes = `${selectVariants({ variant: error ? 'error' : variant, size })} ${className}`;
+
   return (
     <div className="w-full">
       {label && (
@@ -50,7 +52,7 @@ export default function Select({
         </label>
       )}
       <select
-        className={selectVariants({ variant: error ? "error" : variant, size, className })}
+        className={classes}
         {...props}
       >
         {options.map((option) => (
