@@ -9,6 +9,7 @@ interface AlertProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
   icon?: ReactNode;
   onClose?: () => void;
+  className?: string; // ✅ Här är fixen!
 }
 
 export default function Alert({
@@ -17,6 +18,7 @@ export default function Alert({
   variant = 'info',
   icon,
   onClose,
+  className = '', // ✅ lägg till default
 }: AlertProps) {
   const variantStyles = {
     info: 'bg-blue-900/30 border-blue-800/50 text-blue-400',
@@ -27,7 +29,7 @@ export default function Alert({
 
   return (
     <motion.div
-      className={`rounded-md border p-4 ${variantStyles[variant]}`}
+      className={`rounded-md border p-4 ${variantStyles[variant]} ${className}`} // ✅ inkluderar className
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
