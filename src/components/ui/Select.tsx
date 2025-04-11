@@ -12,7 +12,7 @@ const selectVariants = cva(
         default: "border-gray-700",
         error: "border-red-500",
       },
-      size: {
+      sizing: {
         sm: "text-xs",
         md: "text-sm",
         lg: "text-base",
@@ -20,14 +20,16 @@ const selectVariants = cva(
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      sizing: "md",
     },
   }
 );
 
-export interface SelectProps extends 
+type SelectVariantProps = VariantProps<typeof selectVariants>;
+
+export interface SelectProps extends
   React.SelectHTMLAttributes<HTMLSelectElement>,
-  VariantProps<typeof selectVariants> {
+  Omit<SelectVariantProps, 'size'> {
   label?: string;
   error?: string;
   options: { value: string; label: string }[];
@@ -38,11 +40,11 @@ export default function Select({
   error,
   options,
   variant,
-  size,
+  sizing,
   className = '',
   ...props
 }: SelectProps) {
-  const classes = `${selectVariants({ variant: error ? 'error' : variant, size })} ${className}`;
+  const classes = `${selectVariants({ variant: error ? 'error' : variant, sizing })} ${className}`;
 
   return (
     <div className="w-full">
@@ -51,10 +53,7 @@ export default function Select({
           {label}
         </label>
       )}
-      <select
-        className={classes}
-        {...props}
-      >
+      <select className={classes} {...props}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
