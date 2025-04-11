@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/getSupabaseClient'
 import { useAuth } from '@/lib/auth-context';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
@@ -49,9 +49,8 @@ export default function AnalyticsDashboard() {
         setIsLoading(true);
         setError(null);
         
-        const { data, error } = await supabase
-          .from('analytics')
-          .select(`
+        const supabase = getSupabaseClient()
+const { data, error } = await supabase.from('analytics').select(...)
             *,
             video:video_id (
               id,

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/getSupabaseClient'
 import { useAuth } from '@/lib/auth-context';
 import useOpenAIService from '@/lib/services/openai-service';
 import usePexelsService from '@/lib/services/pexels-service';
@@ -59,9 +59,7 @@ export default function CreateVideoForm({ seriesId }: CreateVideoProps) {
         setIsLoading(true);
         setError(null);
         
-        const { data, error } = await supabase
-          .from('series')
-          .select('*')
+        const { data, error } = await supabase.from('videos').insert(...)
           .eq('id', seriesId)
           .eq('user_id', user.id)
           .single();
